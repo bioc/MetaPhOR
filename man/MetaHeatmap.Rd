@@ -23,7 +23,6 @@ Create a Heatmap for Comparing Multiple Samples
 }
 \examples{
 brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
-<<<<<<< HEAD
             package = "MetaPhOR"), header = TRUE, row.names = 1)
 
 ovca <- read.csv(system.file("extdata/OVCA_Scores.csv",
@@ -38,14 +37,4 @@ names <- c("BRCA", "OVCA", "PRAD")
 metaHeatmap(scorelist = all.scores,
             samplenames = names,
             pvalcut = 0.05)
-=======
-        package = "MetaPhOR"), header = TRUE, row.names = 1)
-ovca <- read.csv(system.file("extdata/OVCA_Scores.csv",
-        package = "MetaPhOR"), header = TRUE, row.names = 1)
-prad <- read.csv(system.file("extdata/PRAD_Scores.csv",
-        package = "MetaPhOR"), header = TRUE, row.names = 1)
-all.scores <- list(brca, ovca, prad)
-names <- c("BRCA", "OVCA", "PRAD")
-metaHeatmap(all.scores, names, 0.05)
->>>>>>> upstream/master
 }

@@ -5,17 +5,10 @@
 \title{Metabolic Pathway Analysis of RNAseq Data}
 \usage{
 pathwayAnalysis(
-<<<<<<< HEAD
   DEGpath,
   genename,
   sampsize,
   headers = c("log2FoldChange", "padj")
-=======
-    DEGpath,
-    genename,
-    sampsize,
-    headers = c("log2FoldChange", "padj")
->>>>>>> upstream/master
 )
 }
 \arguments{
@@ -37,15 +30,10 @@ Metabolic Pathway Analysis of RNAseq Data
 \examples{
 set.seed(1234)
 scores <- pathwayAnalysis(
-<<<<<<< HEAD
                  DEGpath = system.file("extdata/BRCA_DEGS.csv",
                                           package = "MetaPhOR"),
                  genename = "X",
                  sampsize = 1095,
                  headers = c("logFC", "adj.P.Val"))
-=======
-system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"), "X", 1095,
-headers = c("logFC", "adj.P.Val"))
->>>>>>> upstream/master
-View(scores)
+scores
 }

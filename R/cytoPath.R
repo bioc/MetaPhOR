@@ -1,28 +1,17 @@
 #' @rdname CytoPath
 #' @title Map Differentially Expressed Genes to Dysregulated Pathways
-<<<<<<< HEAD
 #' @description requires the package RCy3 and a local instance of Cytoscape
-=======
->>>>>>> upstream/master
 #' @param pathway character, the name of the pathway to be visualized
 #' @param DEGpath character, the path to a DEG file by DESeq2 or limma
 #' @param figpath character, the path to which the figure will be saved
 #' @param genename character, column name with HUGO Gene Names in DEG file
-<<<<<<< HEAD
 #' @param headers character vector of length 2 in the form c(log fold change
 #' col name, adjusted p value col name)
 #' @return cytoPath() Returns a Cytoscape figure of DEG data on rWikiPathways
-=======
-#' @param headers character vector of length2 in the form c(log fold change
-#' col name, adjusted p value col name)
-#' @return cytoPath() Returns a Cytoscape figure of DEG data on rWikiPathways
-#' @import RCy3
->>>>>>> upstream/master
 #' @importFrom clusterProfiler bitr
 #' @importFrom RecordLinkage levenshteinSim
 #' @export
 #' @examples
-<<<<<<< HEAD
 #' \donttest{
 #' cytoPath(pathway = "Tryptophan Metabolism",
 #'          DEGpath = system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
@@ -32,20 +21,11 @@
 #' }
 cytoPath <- function(pathway, DEGpath, figpath, genename,
                      headers = c("log2FoldChange","padj")){
-=======
-#' #open Cytoscape locally before running
-#' cytoPath("Tryptophan Metabolism",
-#' system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
-#' file.path(tempdir(), "example_map"), "X", headers = c("logFC", "adj.P.Val"))
-cytoPath <- function(pathway, DEGpath, figpath, genename,
-                                headers = c("log2FoldChange","padj")){
->>>>>>> upstream/master
     for (i in c(pathway, DEGpath, figpath, genename)){
         stopifnot(is.character(i), length(i) == 1, !is.na(i))}
     stopifnot(
         is.vector(headers), length(headers) == 2, !is.na(headers))
 
-<<<<<<< HEAD
     #check if RCy3 is installed
     if (!requireNamespace("RCy3", quietly=TRUE))
         stop("Failed to load the RCy3 package. Is it installed?\n",
@@ -55,11 +35,6 @@ cytoPath <- function(pathway, DEGpath, figpath, genename,
     #check cytoscape connection
     cytoscapePing()
     installApp('wikipathways')
-=======
-    #check cytoscape connection
-    cytoscapePing()
-    installApp('wikipathways') #requires Cytoscape 3.7.0 and above
->>>>>>> upstream/master
 
     #load a wikipathway into cytoscape
     wpoi <- wpid2name$WPID[grep(paste0("\\b", pathway, "$"), wpid2name$name,
