@@ -21,9 +21,9 @@ Create a Bubble Plot for Individual Samples
 }
 \examples{
 brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
-         package = "MetaPhOR"),
-         header = TRUE,
-         row.names = 1)
+                 package = "MetaPhOR"),
+                 header = TRUE,
+                 row.names = 1)
 
 #Bubble Plot Labeled By P Value
 bubblePlot(scorelist = brca,
