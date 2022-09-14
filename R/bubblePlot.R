@@ -9,6 +9,7 @@
 #' @export
 #' @examples
 #' brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
+<<<<<<< HEAD
 #'                  package = "MetaPhOR"),
 #'                  header = TRUE,
 #'                  row.names = 1)
@@ -22,11 +23,22 @@
 #' bubblePlot(scorelist = brca,
 #'            labeltext = "LogFC",
 #'            labelsize = .85)
+=======
+#'          package = "MetaPhOR"), header = TRUE, row.names = 1)
+#' #Bubble Plot Labeled By P Value
+#' bubblePlot(brca, "Pval", .85)
+#' #Bubble Plot Labeled by LogFC
+#' bubblePlot(brca, "LogFC", .85)
+>>>>>>> upstream/master
 bubblePlot <- function(scorelist, labeltext, labelsize = .25){
     stopifnot(
         is.data.frame(scorelist), length(scorelist) == 4, !is.na(scorelist),
         is.character(labeltext), length(labeltext) == 1, !is.na(labeltext),
+<<<<<<< HEAD
         labeltext %in% c("LogFC", "Pval")
+=======
+            labeltext %in% c("LogFC", "Pval")
+>>>>>>> upstream/master
     )
 
     scorelist <- scorelist[,-4]
@@ -40,8 +52,13 @@ bubblePlot <- function(scorelist, labeltext, labelsize = .25){
     } else {}
 
     #Plot Bubble Plot
+<<<<<<< HEAD
     plot <- ggplot(scorelist,
         aes(x = Scores, y = ABSScores, size = ScorePvals, color = Scores)) +
+=======
+    plot <- ggplot(scorelist, aes(x = Scores, y = ABSScores, size = ScorePvals,
+                color = Scores)) +
+>>>>>>> upstream/master
         geom_point(alpha = 0.7) +
         geom_text_repel(data = datalabs, aes(label = gsub("\\.", " ",
                 rownames(datalabs)), size = labelsize), color = "black",
@@ -50,7 +67,14 @@ bubblePlot <- function(scorelist, labeltext, labelsize = .25){
         scale_color_gradientn(colors =
                 colorRampPalette(c("darkblue", "grey", "red"))(n = 299),
                 limits = c(-max(abs(scorelist$Scores)),
+<<<<<<< HEAD
                 max(abs(scorelist$Scores)))) +
         theme_minimal()
         return(plot)
+=======
+                    max(abs(scorelist$Scores)))) +
+        theme_minimal()
+        return(plot)
+
+>>>>>>> upstream/master
 }

@@ -5,6 +5,10 @@ export(cytoPath)
 export(metaHeatmap)
 export(pathwayAnalysis)
 export(pathwayList)
+<<<<<<< HEAD
+=======
+import(RCy3)
+>>>>>>> upstream/master
 import(ggplot2)
 importFrom(RecordLinkage,levenshteinSim)
 importFrom(clusterProfiler,bitr)

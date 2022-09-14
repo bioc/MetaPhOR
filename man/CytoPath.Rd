@@ -5,11 +5,19 @@
 \title{Map Differentially Expressed Genes to Dysregulated Pathways}
 \usage{
 cytoPath(
+<<<<<<< HEAD
   pathway,
   DEGpath,
   figpath,
   genename,
   headers = c("log2FoldChange", "padj")
+=======
+    pathway,
+    DEGpath,
+    figpath,
+    genename,
+    headers = c("log2FoldChange", "padj")
+>>>>>>> upstream/master
 )
 }
 \arguments{
@@ -21,13 +29,18 @@ cytoPath(
 
 \item{genename}{character, column name with HUGO Gene Names in DEG file}
 
+<<<<<<< HEAD
 \item{headers}{character vector of length 2 in the form c(log fold change
+=======
+\item{headers}{character vector of length2 in the form c(log fold change
+>>>>>>> upstream/master
 col name, adjusted p value col name)}
 }
 \value{
 cytoPath() Returns a Cytoscape figure of DEG data on rWikiPathways
 }
 \description{
+<<<<<<< HEAD
 requires the package RCy3 and a local instance of Cytoscape
 }
 \examples{
@@ -38,4 +51,13 @@ cytoPath(pathway = "Tryptophan Metabolism",
          genename = "X",
          headers = c("logFC", "adj.P.Val"))
 }
+=======
+Map Differentially Expressed Genes to Dysregulated Pathways
+}
+\examples{
+#open Cytoscape locally before running
+cytoPath("Tryptophan Metabolism",
+system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
+file.path(tempdir(), "example_map"), "X", headers = c("logFC", "adj.P.Val"))
+>>>>>>> upstream/master
 }

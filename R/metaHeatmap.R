@@ -10,6 +10,7 @@
 #' @export
 #' @examples
 #' brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
+<<<<<<< HEAD
 #'             package = "MetaPhOR"), header = TRUE, row.names = 1)
 #'
 #' ovca <- read.csv(system.file("extdata/OVCA_Scores.csv",
@@ -24,6 +25,16 @@
 #' metaHeatmap(scorelist = all.scores,
 #'             samplenames = names,
 #'             pvalcut = 0.05)
+=======
+#'          package = "MetaPhOR"), header = TRUE, row.names = 1)
+#' ovca <- read.csv(system.file("extdata/OVCA_Scores.csv",
+#'          package = "MetaPhOR"), header = TRUE, row.names = 1)
+#' prad <- read.csv(system.file("extdata/PRAD_Scores.csv",
+#'          package = "MetaPhOR"), header = TRUE, row.names = 1)
+#' all.scores <- list(brca, ovca, prad)
+#' names <- c("BRCA", "OVCA", "PRAD")
+#' metaHeatmap(all.scores, names, 0.05)
+>>>>>>> upstream/master
 metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
     stopifnot(
         is.list(scorelist), !is.na(scorelist),
@@ -35,9 +46,14 @@ metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
         is.numeric(pvalcut), length(pvalcut) == 1, !is.na(pvalcut),
         length(scorelist) == length(samplenames)
     )
+<<<<<<< HEAD
 
     #Subset by Score Type and Pval Cutoff
     matdata <- c()
+=======
+    matdata <- c()
+    #Subset by Score Type and Pval Cutoff
+>>>>>>> upstream/master
     for (i in seq_along(scorelist)){
         index <- which(scorelist[[i]]$ABSScorePvals >= pvalcut)
         adjustedscores <- replace(scorelist[[i]]$ABSScores, index, 0)
@@ -61,6 +77,10 @@ metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
 
     #Plot Heatmap
     plot <- pheatmap(hmat, colorRampPalette(c("grey", "red"))(n = 299),
+<<<<<<< HEAD
                      fontsize_col = 8, fontsize_row = 10, border_color = NA)
+=======
+                        fontsize_col = 8, fontsize_row = 10, border_color = NA)
+>>>>>>> upstream/master
     return(plot)
 }

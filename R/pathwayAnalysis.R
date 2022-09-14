@@ -14,15 +14,21 @@
 #' @examples
 #' set.seed(1234)
 #' scores <- pathwayAnalysis(
+<<<<<<< HEAD
 #'                  DEGpath = system.file("extdata/BRCA_DEGS.csv",
 #'                                           package = "MetaPhOR"),
 #'                  genename = "X",
 #'                  sampsize = 1095,
 #'                  headers = c("logFC", "adj.P.Val"))
+=======
+#' system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"), "X", 1095,
+#' headers = c("logFC", "adj.P.Val"))
+>>>>>>> upstream/master
 #' View(scores)
 pathwayAnalysis <- function(DEGpath, genename, sampsize,
                             headers = c("log2FoldChange", "padj")){
     stopifnot(is.character(DEGpath), length(DEGpath) == 1, !is.na(DEGpath),
+<<<<<<< HEAD
                 is.character(genename), length(genename) == 1, !is.na(genename),
                 is.numeric(sampsize), length(sampsize) == 1, !is.na(sampsize),
                 is.vector(headers), length(headers) == 2, !is.na(headers))
@@ -39,6 +45,23 @@ pathwayAnalysis <- function(DEGpath, genename, sampsize,
                                     which(is.na(MP_DEGS[,headers[2]])), 1)
     MP_DEGS[,headers[1]] <- replace(MP_DEGS[,headers[1]],
                                     which(is.na(MP_DEGS[,headers[1]])), 0)
+=======
+        is.character(genename), length(genename) == 1, !is.na(genename),
+        is.numeric(sampsize), length(sampsize) == 1, !is.na(sampsize),
+        is.vector(headers), length(headers) == 2, !is.na(headers))
+
+    if (str_sub(DEGpath, -3, -1) == "txt"){#Read in DEG File
+        MP_DEGS <- read.table(DEGpath, header = TRUE, sep = "\t")
+    } else if (str_sub(DEGpath, -3, -1) == "csv") {MP_DEGS <- read.csv(DEGpath,
+        header = TRUE)} else {stop("file is not .csv or .txt")}
+
+    MP_DEGS[,headers[2]] <- replace(MP_DEGS[,headers[2]],
+                                which(MP_DEGS[,headers[2]] == 0), 1e-314)
+    MP_DEGS[,headers[2]] <- replace(MP_DEGS[,headers[2]],
+                                which(is.na(MP_DEGS[,headers[2]])), 1)
+    MP_DEGS[,headers[1]] <- replace(MP_DEGS[,headers[1]],
+                                which(is.na(MP_DEGS[,headers[1]])), 0)
+>>>>>>> upstream/master
 
     #Calculate Scores
     MP_Scores <- as.data.frame(matrix(nrow = nrow(MP_DEGS), ncol = 2,
