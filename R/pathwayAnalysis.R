@@ -13,6 +13,7 @@
 #' @export
 #' @examples
 #' set.seed(1234)
+#'
 #' scores <- pathwayAnalysis(
 #'                  DEGpath = system.file("extdata/BRCA_DEGS.csv",
 #'                                           package = "MetaPhOR"),

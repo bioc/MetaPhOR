@@ -6,3 +6,7 @@
 
 * Updated Vignette Text 
 * Removed RCy3 as an import (-> suggested, updated vignette and man)
+
+# MetaPhOR 0.99.2 (2022-09-14)
+
+* Updated Vignette for Timeout (don't run pathwayAnalysis)
