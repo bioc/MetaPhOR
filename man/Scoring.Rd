@@ -28,7 +28,6 @@ pathwayAnalysis() returns a dataframe of pathway scores and pvals
 Metabolic Pathway Analysis of RNAseq Data
 }
 \examples{
-\donttest{
 set.seed(1234)
 
 scores <- pathwayAnalysis(
@@ -38,5 +37,4 @@ scores <- pathwayAnalysis(
                  sampsize = 1095,
                  headers = c("logFC", "adj.P.Val"))
 scores
-}
 }

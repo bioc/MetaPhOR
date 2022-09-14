@@ -10,3 +10,7 @@
 # MetaPhOR 0.99.2 (2022-09-14)
 
 * Updated Vignette for Timeout (don't run pathwayAnalysis)
+
+# MetaPhOR 0.99.3 (2022-09-14)
+
+* removed donttest from pathwayAnalysis example
