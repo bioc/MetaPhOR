@@ -5,11 +5,11 @@
 \title{Map Differentially Expressed Genes to Dysregulated Pathways}
 \usage{
 cytoPath(
-  pathway,
-  DEGpath,
-  figpath,
-  genename,
-  headers = c("log2FoldChange", "padj")
+    pathway,
+    DEGpath,
+    figpath,
+    genename,
+    headers = c("log2FoldChange", "padj")
 )
 }
 \arguments{
@@ -33,9 +33,9 @@ requires the package RCy3 and a local instance of Cytoscape
 \examples{
 \donttest{
 cytoPath(pathway = "Tryptophan Metabolism",
-         DEGpath = system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
-         figpath = file.path(tempdir(), "example_map"),
-         genename = "X",
-         headers = c("logFC", "adj.P.Val"))
+        DEGpath = system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
+        figpath = file.path(tempdir(), "example_map"),
+        genename = "X",
+        headers = c("logFC", "adj.P.Val"))
 }
 }

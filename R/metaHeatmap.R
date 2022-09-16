@@ -61,6 +61,6 @@ metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
 
     #Plot Heatmap
     plot <- pheatmap(hmat, colorRampPalette(c("grey", "red"))(n = 299),
-                     fontsize_col = 8, fontsize_row = 10, border_color = NA)
+                    fontsize_col = 8, fontsize_row = 10, border_color = NA)
     return(plot)
 }

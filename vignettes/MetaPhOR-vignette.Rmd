@@ -92,12 +92,17 @@ dysregulation.
 results by bootstrapping. It is NECESSARY that the seed remain the same
 throughout an analysis.**
 
+**Note: Bootrapping is performed, by default, with 100,000 iterations of 
+resampling for optimal power. The number of iterations can be decreased for 
+improved speed. We use 50,000 iterations for improved speed of examples.***
+
 pathwayAnalysis() requires:  
 
 * The file path to the DEG list of interest 
-* Correct headers for fold change and p value columns (as indicated above)
 * The name of the column containing HUGO gene names 
 * The sample size of the DEG analysis
+* The number of iterations of resampling to be performed during bootstrapping
+* Correct headers for fold change and p value columns (as indicated above)
 
 A partial output of the pathway analysis function can be seen as follows: 
 
@@ -113,13 +118,14 @@ brca <- pathwayAnalysis(DEGpath = system.file("extdata/BRCA_DEGS.csv",
                         package = "MetaPhOR"),
                         genename = "X",
                         sampsize = 1095,
+                        iters = 100000,
                         headers = c("logFC", "adj.P.Val"))
 ```
 
 ```{r, echo = FALSE}
 brca <- read.csv(system.file("extdata/BRCA_Scores.csv", package = "MetaPhOR"),
-                 header = TRUE,
-                 row.names = 1)
+                    header = TRUE,
+                    row.names = 1)
 
 kable(head(brca), format="latex", booktabs = TRUE)    %>%
     kable_styling(position = "center", latex_options = c("striped", 
@@ -149,8 +155,8 @@ bubblePlot() requires:
 **Bubble Plot Labeled by P Value**  
 ```{r}
 pval <- bubblePlot(scorelist = brca,
-                   labeltext = "Pval",
-                   labelsize = .85)
+                    labeltext = "Pval",
+                    labelsize = .85)
 plot(pval)
 ```
 
@@ -188,11 +194,11 @@ metaHeatmap() requires:
 ##run in the same manner as brca for comparison
 
 ovca <- read.csv(system.file("extdata/OVCA_Scores.csv", package = "MetaPhOR"),
-                 header = TRUE,
-                 row.names = 1)
+                header = TRUE,
+                row.names = 1)
 prad <- read.csv(system.file("extdata/PRAD_Scores.csv", package = "MetaPhOR"),
-                 header = TRUE,
-                 row.names = 1)
+                header = TRUE,
+                row.names = 1)
 
 all.scores <- list(brca, ovca, prad)
 names <- c("BRCA", "OVCA", "PRAD")
@@ -211,7 +217,8 @@ providing a detailed look at transcriptional dysregulation within and between
 “bubblePlot” or “metaHeatmap.” This function utilizes Cytoscape (@Cytoscape); 
 the package *RCy3* and a local instance of Cytoscape are required to render this
 plot. For details regarding legends, see the Cytoscape Legend Creator Tutorial
-(https://cytoscape.org/cytoscape-tutorials/protocols/legend-creator/#/introduction).
+(https://cytoscape.org/cytoscape-tutorials/protocols/legend-creator/#/
+introduction).
 
 cytoPath() requires:  
 
@@ -219,13 +226,14 @@ cytoPath() requires:
 * The file path to the DEG list of interest 
 * The file path to which the figure will be saved
 * The name of the column containing HUGE gene names 
+* Correct headers for fold change and p value columns (as indicated above)
 
 ```{r, eval = FALSE}
 cytoPath(pathway = "Tryptophan Metabolism",
-         DEGpath = "BRCA_DEGS.csv",
-         figpath = paste(getwd(), "BRCA_Tryptophan_Pathway", sep = "/"),
-         genename = "X",
-         headers = c("logFC", "adj.P.Val"))
+            DEGpath = "BRCA_DEGS.csv",
+            figpath = paste(getwd(), "BRCA_Tryptophan_Pathway", sep = "/"),
+            genename = "X",
+            headers = c("logFC", "adj.P.Val"))
 ```
 
 

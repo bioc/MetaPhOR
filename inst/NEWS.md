@@ -14,3 +14,9 @@
 # MetaPhOR 0.99.3 (2022-09-14)
 
 * removed donttest from pathwayAnalysis example
+
+# MetaPhOR 0.99.4 (2022-09-16)
+
+* added argument for resampling iterations in bootstrapping
+* update vignette text and example for pathwayAnalysis
+* updated styling for bioc guidelines

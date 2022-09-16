@@ -9,19 +9,19 @@
 #' @export
 #' @examples
 #' brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
-#'                  package = "MetaPhOR"),
-#'                  header = TRUE,
-#'                  row.names = 1)
+#'                     package = "MetaPhOR"),
+#'                     header = TRUE,
+#'                     row.names = 1)
 #'
 #' #Bubble Plot Labeled By P Value
 #' bubblePlot(scorelist = brca,
-#'            labeltext = "Pval",
-#'            labelsize = .85)
+#'             labeltext = "Pval",
+#'             labelsize = .85)
 #'
 #' #Bubble Plot Labeled by LogFC
 #' bubblePlot(scorelist = brca,
-#'            labeltext = "LogFC",
-#'            labelsize = .85)
+#'             labeltext = "LogFC",
+#'             labelsize = .85)
 bubblePlot <- function(scorelist, labeltext, labelsize = .25){
     stopifnot(
         is.data.frame(scorelist), length(scorelist) == 4, !is.na(scorelist),

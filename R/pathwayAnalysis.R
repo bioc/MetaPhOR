@@ -3,6 +3,8 @@
 #' @param DEGpath character, the path to a txt or csv DEG file
 #' @param genename character, column name with HUGO Gene Names in DEG file
 #' @param sampsize numeric, the sample size of the experiment to be analyzed
+#' @param iters numeric, the number of iterations of resampling to perform in
+#' bootstrapping
 #' @param headers character vector of length2 in the form c(log fold change
 #' col name, adjusted p value col name)
 #' @return pathwayAnalysis() returns a dataframe of pathway scores and pvals
@@ -12,21 +14,26 @@
 #' @importFrom utils read.csv read.table
 #' @export
 #' @examples
+#' #iterations (iters) of resampling in bootstraping set to 50,000 for speed
+#' #100,000 iterations recommended for improved power
+#'
 #' set.seed(1234)
 #'
 #' scores <- pathwayAnalysis(
-#'                  DEGpath = system.file("extdata/BRCA_DEGS.csv",
-#'                                           package = "MetaPhOR"),
-#'                  genename = "X",
-#'                  sampsize = 1095,
-#'                  headers = c("logFC", "adj.P.Val"))
+#'                 DEGpath = system.file("extdata/BRCA_DEGS.csv",
+#'                                         package = "MetaPhOR"),
+#'                 genename = "X",
+#'                 sampsize = 1095,
+#'                 iters = 50000,
+#'                 headers = c("logFC", "adj.P.Val"))
 #' scores
-pathwayAnalysis <- function(DEGpath, genename, sampsize,
+pathwayAnalysis <- function(DEGpath, genename, sampsize, iters = 100000,
                             headers = c("log2FoldChange", "padj")){
     stopifnot(is.character(DEGpath), length(DEGpath) == 1, !is.na(DEGpath),
                 is.character(genename), length(genename) == 1, !is.na(genename),
                 is.numeric(sampsize), length(sampsize) == 1, !is.na(sampsize),
-                is.vector(headers), length(headers) == 2, !is.na(headers))
+                is.vector(headers), length(headers) == 2, !is.na(headers),
+                is.numeric(iters), length(iters) == 1, !is.na(iters))
 
     if (str_sub(DEGpath, -3, -1) == "txt"){
         MP_DEGS <- read.table(DEGpath, header = TRUE, sep = "\t")
@@ -66,12 +73,12 @@ pathwayAnalysis <- function(DEGpath, genename, sampsize,
     abspvals <- c()
     for (i in c("Score", "ABSScore")){
         for (j in seq_len(ncol(AllPathwaysKEGGPS))){
-            for (k in seq_len(100000)){boot.Scores <- sample(MP_Scores[,i],
+            for (k in seq_len(iters)){boot.Scores <- sample(MP_Scores[,i],
                 size = length(grep(".", AllPathwaysKEGGPS[,j])), replace = TRUE)
                 #Sum Scores
                 z[k] <- sum(boot.Scores)/sqrt(sampsize)}
-            if (i == "Score") {pvals[j] <- sum(z >= KEGG_Scores[j])/100000}
-            else {abspvals[j] <- sum(z >= ABSScores[j])/100000}}}
+            if (i == "Score") {pvals[j] <- sum(z >= KEGG_Scores[j])/iters}
+            else {abspvals[j] <- sum(z >= ABSScores[j])/iters}}}
 
     PipelineScores <- as.data.frame(matrix(data =    #Compile Data Frame
                     c(KEGG_Scores, ABSScores, pvals, abspvals),

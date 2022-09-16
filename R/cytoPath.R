@@ -14,13 +14,13 @@
 #' @examples
 #' \donttest{
 #' cytoPath(pathway = "Tryptophan Metabolism",
-#'          DEGpath = system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
-#'          figpath = file.path(tempdir(), "example_map"),
-#'          genename = "X",
-#'          headers = c("logFC", "adj.P.Val"))
+#'         DEGpath = system.file("extdata/BRCA_DEGS.csv", package = "MetaPhOR"),
+#'         figpath = file.path(tempdir(), "example_map"),
+#'         genename = "X",
+#'         headers = c("logFC", "adj.P.Val"))
 #' }
 cytoPath <- function(pathway, DEGpath, figpath, genename,
-                     headers = c("log2FoldChange","padj")){
+                    headers = c("log2FoldChange","padj")){
     for (i in c(pathway, DEGpath, figpath, genename)){
         stopifnot(is.character(i), length(i) == 1, !is.na(i))}
     stopifnot(
@@ -29,8 +29,8 @@ cytoPath <- function(pathway, DEGpath, figpath, genename,
     #check if RCy3 is installed
     if (!requireNamespace("RCy3", quietly=TRUE))
         stop("Failed to load the RCy3 package. Is it installed?\n",
-             "  Note that the cytoPath() function requires RCy3.\n",
-             "  Please install it with BiocManager::install(\"RCy3\").")
+                "  Note that the cytoPath() function requires RCy3.\n",
+                "  Please install it with BiocManager::install(\"RCy3\").")
 
     #check cytoscape connection
     cytoscapePing()

@@ -5,10 +5,11 @@
 \title{Metabolic Pathway Analysis of RNAseq Data}
 \usage{
 pathwayAnalysis(
-  DEGpath,
-  genename,
-  sampsize,
-  headers = c("log2FoldChange", "padj")
+    DEGpath,
+    genename,
+    sampsize,
+    iters = 1e+05,
+    headers = c("log2FoldChange", "padj")
 )
 }
 \arguments{
@@ -17,6 +18,9 @@ pathwayAnalysis(
 \item{genename}{character, column name with HUGO Gene Names in DEG file}
 
 \item{sampsize}{numeric, the sample size of the experiment to be analyzed}
+
+\item{iters}{numeric, the number of iterations of resampling to perform in
+bootstrapping}
 
 \item{headers}{character vector of length2 in the form c(log fold change
 col name, adjusted p value col name)}
@@ -28,13 +32,17 @@ pathwayAnalysis() returns a dataframe of pathway scores and pvals
 Metabolic Pathway Analysis of RNAseq Data
 }
 \examples{
+#iterations (iters) of resampling in bootstraping set to 50,000 for speed
+#100,000 iterations recommended for improved power
+
 set.seed(1234)
 
 scores <- pathwayAnalysis(
-                 DEGpath = system.file("extdata/BRCA_DEGS.csv",
-                                          package = "MetaPhOR"),
-                 genename = "X",
-                 sampsize = 1095,
-                 headers = c("logFC", "adj.P.Val"))
+                DEGpath = system.file("extdata/BRCA_DEGS.csv",
+                                        package = "MetaPhOR"),
+                genename = "X",
+                sampsize = 1095,
+                iters = 50000,
+                headers = c("logFC", "adj.P.Val"))
 scores
 }
