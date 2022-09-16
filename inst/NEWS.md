@@ -20,3 +20,8 @@
 * added argument for resampling iterations in bootstrapping
 * update vignette text and example for pathwayAnalysis
 * updated styling for bioc guidelines
+
+
+# MetaPhOR 0.99.5 (2022-09-16)
+
+* updated files tracked by git
