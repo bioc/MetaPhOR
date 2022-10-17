@@ -14,7 +14,7 @@
 #' @importFrom utils read.csv read.table
 #' @export
 #' @examples
-#' #iterations (iters) of resampling in bootstraping set to 50,000 for speed
+#' #iterations (iters) of resampling in bootstraping set to 40,000 for speed
 #' #100,000 iterations recommended for improved power
 #'
 #' set.seed(1234)
@@ -24,7 +24,7 @@
 #'                                         package = "MetaPhOR"),
 #'                 genename = "X",
 #'                 sampsize = 1095,
-#'                 iters = 50000,
+#'                 iters = 40000,
 #'                 headers = c("logFC", "adj.P.Val"))
 #' scores
 pathwayAnalysis <- function(DEGpath, genename, sampsize, iters = 100000,
