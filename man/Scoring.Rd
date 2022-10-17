@@ -32,7 +32,7 @@ pathwayAnalysis() returns a dataframe of pathway scores and pvals
 Metabolic Pathway Analysis of RNAseq Data
 }
 \examples{
-#iterations (iters) of resampling in bootstraping set to 50,000 for speed
+#iterations (iters) of resampling in bootstraping set to 30,000 for speed
 #100,000 iterations recommended for improved power
 
 set.seed(1234)
@@ -42,7 +42,7 @@ scores <- pathwayAnalysis(
                                         package = "MetaPhOR"),
                 genename = "X",
                 sampsize = 1095,
-                iters = 50000,
+                iters = 30000,
                 headers = c("logFC", "adj.P.Val"))
 scores
 }
