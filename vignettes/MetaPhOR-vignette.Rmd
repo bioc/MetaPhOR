@@ -113,7 +113,7 @@ A partial output of the pathway analysis function can be seen as follows:
 # sampsize <- c(1095, 378, 497)
 ```
 
-```{r}
+```{r, eval = FALSE}
 set.seed(1234)
 
 brca <- pathwayAnalysis(DEGpath = system.file("extdata/BRCA_DEGS.csv",
@@ -125,6 +125,9 @@ brca <- pathwayAnalysis(DEGpath = system.file("extdata/BRCA_DEGS.csv",
 ```
 
 ```{r, echo = FALSE}
+brca <- read.csv(system.file("extdata/BRCA_Scores.csv",
+                    package = "MetaPhOR"), header = TRUE, row.names = 1)
+
 kable(head(brca), format="html", booktabs = TRUE)    %>%
     kable_material()
 ```
