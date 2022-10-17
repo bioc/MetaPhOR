@@ -10,6 +10,8 @@
 #' @return cytoPath() Returns a Cytoscape figure of DEG data on rWikiPathways
 #' @importFrom clusterProfiler bitr
 #' @importFrom RecordLinkage levenshteinSim
+#' @importFrom RCy3 cytoscapePing installApp commandsRun loadTableData
+#' setNodeColorDefault setNodeColorMapping fitContent exportImage
 #' @export
 #' @examples
 #' \donttest{
@@ -25,12 +27,6 @@ cytoPath <- function(pathway, DEGpath, figpath, genename,
         stopifnot(is.character(i), length(i) == 1, !is.na(i))}
     stopifnot(
         is.vector(headers), length(headers) == 2, !is.na(headers))
-
-    #check if RCy3 is installed
-    if (!requireNamespace("RCy3", quietly=TRUE))
-        stop("Failed to load the RCy3 package. Is it installed?\n",
-                "  Note that the cytoPath() function requires RCy3.\n",
-                "  Please install it with BiocManager::install(\"RCy3\").")
 
     #check cytoscape connection
     cytoscapePing()
@@ -57,15 +53,9 @@ cytoPath <- function(pathway, DEGpath, figpath, genename,
     node.table[,1] <- nodes
 
     #get logFC for nodes
-    for (i in seq_len(nrow(node.table))){
-        if (sum(grepl(node.table$id[i], toupper(DEGS[,genename]))) == 1){
-            node.table[i,"logfc"] <- DEGS[,headers[1]][grep(
-                        node.table$id[i],toupper(DEGS[,genename]))]
-        } else if (sum(grepl(node.table$id[i],
-                        toupper(DEGS[,genename]))) > 1)
-            {node.table[i,"logfc"] <- mean(DEGS[,headers[1]]
-                        [grep(node.table$id[i],toupper(DEGS[,genename]))])
-        } else {node.table[i, "logfc"] <- NA}}
+    node.table$logfc <- unlist(lapply(node.table$id, function(x)
+                    mean(DEGS[,headers[1]][grep(x,toupper(DEGS[,genename]))])))
+    node.table$logfc <- as.numeric(gsub(NaN, NA, node.table$logfc))
 
     #load into cytoscape
     loadTableData(node.table, data.key.column = 'id', table = 'node',

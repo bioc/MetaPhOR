@@ -37,24 +37,19 @@ metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
     )
 
     #Subset by Score Type and Pval Cutoff
-    matdata <- c()
-    for (i in seq_along(scorelist)){
-        index <- which(scorelist[[i]]$ABSScorePvals >= pvalcut)
-        adjustedscores <- replace(scorelist[[i]]$ABSScores, index, 0)
-        matdata <- c(matdata, adjustedscores)
-    }
-
+    matdata <- unlist(lapply(scorelist, function(x)
+        replace(x$ABSScores, which(x$ABSScorePvals >= pvalcut), 0)))
 
     #Make Heatmap Matrix
     hmat <- matrix(data = matdata, byrow = FALSE,
-                    nrow = length(rownames(scorelist[[i]])),
+                    nrow = 114,
                     ncol = length(samplenames),
                     dimnames = list(gsub("\\.", " ",
-                    rownames(scorelist[[i]])), samplenames))
+                    rownames(scorelist)), samplenames))
 
     #remove all zero rows
     hmat[is.na(hmat)] <- 0
-    hmat <- hmat[rowSums(hmat[]) > 0, ]
+    hmat <- hmat[rowSums(hmat[]) > 0, , drop = FALSE]
 
     #Scale by Column
     hmat <- scale(hmat, center = FALSE)

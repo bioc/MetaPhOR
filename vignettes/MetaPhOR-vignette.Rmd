@@ -2,15 +2,18 @@
 title: "MetaPhOR"
 author: "Emily Isenhart"
 output: 
-    pdf_document:
-        fig_width: 6
-        fig_height: 3.5
+    BiocStyle::html_document:
+        toc: FALSE
 bibliography: "`r system.file('extdata/REFERENCES.bib', package = 'MetaPhOR')`"
 vignette: >
     %\VignetteIndexEntry{MetaPhOR}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
+
+```{r style, include = FALSE, results = 'asis'}
+BiocStyle::html_document()
+```
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -31,7 +34,7 @@ frame of scores for each KEGG pathway. These scores represent the magnitude and
 direction of transcriptional change within the pathway, along with estimated 
 p-values (@MP). MetaPhOR then uses these scores to visualize 
 metabolic profiles within and between samples through a variety of mechanisms, 
-including: bubble plots, heatmaps, and pathway models.  
+including: bubble plots, heatmaps, and pathway models.
 
 ## Installation  
 This command line can be used to install and load MetaPhOR.  
@@ -59,9 +62,8 @@ exdegs <- read.csv(system.file("extdata/exampledegs.csv",
 ```
 
 ```{r, echo=FALSE}
-kable(head(exdegs), format="latex", booktabs = TRUE)    %>%
-    kable_styling(position = "center", latex_options = c("striped", 
-                                                            "hold_position"))
+kable(head(exdegs), format="html")    %>%
+    kable_material()
 ```
 
 ## Pathway Analysis
@@ -111,25 +113,20 @@ A partial output of the pathway analysis function can be seen as follows:
 # sampsize <- c(1095, 378, 497)
 ```
 
-```{r, eval = FALSE}
+```{r}
 set.seed(1234)
 
 brca <- pathwayAnalysis(DEGpath = system.file("extdata/BRCA_DEGS.csv",
                         package = "MetaPhOR"),
                         genename = "X",
                         sampsize = 1095,
-                        iters = 100000,
+                        iters = 50000,
                         headers = c("logFC", "adj.P.Val"))
 ```
 
 ```{r, echo = FALSE}
-brca <- read.csv(system.file("extdata/BRCA_Scores.csv", package = "MetaPhOR"),
-                    header = TRUE,
-                    row.names = 1)
-
-kable(head(brca), format="latex", booktabs = TRUE)    %>%
-    kable_styling(position = "center", latex_options = c("striped", 
-                                                            "hold_position"))
+kable(head(brca), format="html", booktabs = TRUE)    %>%
+    kable_material()
 ```
 
 ## bubblePlot  
@@ -237,7 +234,7 @@ cytoPath(pathway = "Tryptophan Metabolism",
 ```
 
 
-```{r, echo = F, out.width = "100%"}
+```{r, echo = F, fig.wide = TRUE}
 knitr::include_graphics(c(system.file("extdata", "BRCA_Tryptophan_Pathway.png", 
                                         package = "MetaPhOR")))
 ```
@@ -252,15 +249,14 @@ pathwayList()
 ```
 
 ```{r, echo = F}
-kable(head(pathwayList()), format = "latex", booktabs = TRUE)    %>%
-    kable_styling(position = "center", latex_options = c("striped", 
-                                                            "hold_position"))
+kable(head(pathwayList()), format = "html", booktabs = TRUE)    %>%
+    kable_material()
 ```
 
 ## Conclusion  
 MetaPhOR contains five functions for the analysis of metabolic dysregulation 
 using transcriptomic-level data and the production of publication-quality 
-figures. This is version of MetaPhOR, 0.99.0, is available at
+figures. This version of MetaPhOR, 0.99.0, is available at
 https://github.com/emilyise/MetaPhOR. 
 
 ## SessionInfo

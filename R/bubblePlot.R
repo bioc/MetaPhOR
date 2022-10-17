@@ -4,7 +4,8 @@
 #' @param labeltext character(1) what to label points by: LogFC or Pval
 #' @param labelsize numeric(1) size of text labels for points
 #' @return bubblePlot() returns a bubble plot using pathway scores, pval, logfc
-#' @import ggplot2
+#' @importFrom ggplot2 ggplot aes geom_point scale_size scale_color_gradientn
+#' theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @export
 #' @examples
@@ -29,14 +30,16 @@ bubblePlot <- function(scorelist, labeltext, labelsize = .25){
         labeltext %in% c("LogFC", "Pval")
     )
 
-    scorelist <- scorelist[,-4]
+    scorelist <- scorelist[, -4, drop = FALSE]
     scorelist <- na.omit(scorelist)
 
     #Find Top Scores
     if (labeltext == "LogFC"){
-        datalabs <- scorelist[order(-abs(scorelist$Scores))[seq_len(10)],]
+        datalabs <- scorelist[order(-abs(scorelist$Scores))
+                                [seq_len(10)], , drop = FALSE]
     } else if (labeltext == "Pval") {
-        datalabs <- scorelist[order(scorelist$ScorePvals)[seq_len(10)],]
+        datalabs <- scorelist[order(scorelist$ScorePvals)
+                                [seq_len(10)], , drop = FALSE]
     } else {}
 
     #Plot Bubble Plot

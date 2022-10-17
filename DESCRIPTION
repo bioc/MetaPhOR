@@ -1,7 +1,7 @@
 Package: MetaPhOR
 Type: Package
 Title: Metabolic Pathway Analysis of RNA
-Version: 0.99.5
+Version: 0.99.6
 Authors@R:
     c(person("Emily", "Isenhart", email = "emily.isenhart@roswellpark.org",
         role = c("aut", "cre")),
@@ -11,16 +11,16 @@ License: Artistic-2.0
 Encoding: UTF-8
 RoxygenNote: 7.2.1
 Imports: utils, ggplot2, ggrepel, stringr, pheatmap, grDevices, stats,
-    clusterProfiler, RecordLinkage
+    clusterProfiler, RecordLinkage, RCy3
 Depends: 
     R (>= 4.2.0)
 biocViews: Metabolomics, RNASeq, Pathways, GeneExpression, 
     DifferentialExpression, KEGG, Sequencing, Microarray
 Suggests: 
+    BiocStyle,
     knitr,
     rmarkdown,
-    kableExtra,
-    RCy3
+    kableExtra
 VignetteBuilder: knitr
 LazyData: false
 SystemRequirements: Cytoscape (>= 3.9.0) for the cytoPath() examples

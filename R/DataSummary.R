@@ -1,5 +1,6 @@
 #' @docType package
 #' @name datasummary
+#' @importFrom utils globalVariables
 "_PACKAGE"
 
-utils::globalVariables(c("Scores", "ABSScores", "ScorePvals"))
+globalVariables(c("Scores", "ABSScores", "ScorePvals"))

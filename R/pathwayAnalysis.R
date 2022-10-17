@@ -48,37 +48,38 @@ pathwayAnalysis <- function(DEGpath, genename, sampsize, iters = 100000,
     MP_DEGS[,headers[1]] <- replace(MP_DEGS[,headers[1]],
                                     which(is.na(MP_DEGS[,headers[1]])), 0)
 
-    #Calculate Scores
     MP_Scores <- as.data.frame(matrix(nrow = nrow(MP_DEGS), ncol = 2,
                     dimnames = list(rownames(MP_DEGS), c("Score", "ABSScore"))))
     MP_Scores$Score <- (-log(MP_DEGS[,headers[2]]))*MP_DEGS[,headers[1]]
-    MP_Scores$ABSScore <- abs(MP_Scores$Score)
+    MP_Scores$ABSScore <- abs(MP_Scores$Score) #Calculate Scores
 
-    #Read in KEGG Pathways
     AllPathwaysKEGGPS <- data.frame(lapply(KEGGdata, as.character),
-                                    stringsAsFactors = FALSE)
+                                    stringsAsFactors = FALSE) #Read KEGG Paths
 
-    KEGG_Scores <- c() #Calculate Pathway Scores
-    ABSScores <- c()
-    for (i in seq_len(ncol(AllPathwaysKEGGPS))){
-        for (j in c("Score", "ABSScore")){
-            y <- MP_Scores[toupper(MP_DEGS[,genename]) %in%
-                            as.character(AllPathwaysKEGGPS[,i]),]
-            PathwayScore <- as.vector(sum(y[,j])/sqrt(sampsize))
-            if (j == "Score"){KEGG_Scores[i] <- PathwayScore
-            } else {ABSScores[i] <- PathwayScore}}}
+    y <- apply(AllPathwaysKEGGPS, 2, function(x) #Calculate Pathway Scores
+        MP_Scores[toupper(MP_DEGS[,genename]) %in% as.character(x),])
+    KEGG_Scores <- as.vector(unlist(lapply(y, function(x)
+        as.vector(sum(x[,"Score"])/sqrt(sampsize)))))
+    ABSScores <- as.vector(unlist(lapply(y, function(x)
+        as.vector(sum(x[,"ABSScore"])/sqrt(sampsize)))))
 
-    z <- c() #Bootstrapping for Significance
-    pvals <- c()
-    abspvals <- c()
-    for (i in c("Score", "ABSScore")){
-        for (j in seq_len(ncol(AllPathwaysKEGGPS))){
-            for (k in seq_len(iters)){boot.Scores <- sample(MP_Scores[,i],
-                size = length(grep(".", AllPathwaysKEGGPS[,j])), replace = TRUE)
-                #Sum Scores
-                z[k] <- sum(boot.Scores)/sqrt(sampsize)}
-            if (i == "Score") {pvals[j] <- sum(z >= KEGG_Scores[j])/iters}
-            else {abspvals[j] <- sum(z >= ABSScores[j])/iters}}}
+    boot.Scores <- replicate(iters, apply(AllPathwaysKEGGPS, 2, #Bootstrapping
+        function(x) sample(MP_Scores[,"Score"], size = length(grep(".", x)),
+        replace = TRUE)))
+    foo <- lapply(boot.Scores, function(x) sum(unlist(x))/sqrt(sampsize))
+    bar <- matrix(foo, nrow = 114, ncol = iters,
+        dimnames = list(rownames(boot.Scores, colnames(boot.Scores))))
+    pvals <- unlist(lapply(seq_len(ncol(AllPathwaysKEGGPS)),
+        function(x) sum(bar[x,] >= KEGG_Scores[x])/iters))
+
+    boot.Scores <- replicate(iters, apply(AllPathwaysKEGGPS, 2,#Bootstrapping
+        function(x) sample(MP_Scores[,"ABSScore"], size = length(grep(".", x)),
+        replace = TRUE)))
+    foo <- lapply(boot.Scores, function(x) sum(unlist(x))/sqrt(sampsize))
+    bar <- matrix(foo, nrow = 114, ncol = iters,
+        dimnames = list(rownames(boot.Scores, colnames(boot.Scores))))
+    abspvals <- unlist(lapply(seq_len(ncol(AllPathwaysKEGGPS)),
+        function(x) sum(bar[x,] >= ABSScores[x])/iters))
 
     PipelineScores <- as.data.frame(matrix(data =    #Compile Data Frame
                     c(KEGG_Scores, ABSScores, pvals, abspvals),
