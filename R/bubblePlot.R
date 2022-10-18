@@ -36,10 +36,10 @@ bubblePlot <- function(scorelist, labeltext, labelsize = .25){
     #Find Top Scores
     if (labeltext == "LogFC"){
         datalabs <- scorelist[order(-abs(scorelist$Scores))
-                                [seq_len(10)], , drop = FALSE]
+                            [seq_len(min(10, nrow(scorelist)))], , drop = FALSE]
     } else if (labeltext == "Pval") {
         datalabs <- scorelist[order(scorelist$ScorePvals)
-                                [seq_len(10)], , drop = FALSE]
+                            [seq_len(min(10, nrow(scorelist)))], , drop = FALSE]
     } else {}
 
     #Plot Bubble Plot
