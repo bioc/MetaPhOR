@@ -45,7 +45,7 @@ metaHeatmap <- function(scorelist, samplenames,  pvalcut = 0.05){
                     nrow = 114,
                     ncol = length(samplenames),
                     dimnames = list(gsub("\\.", " ",
-                    rownames(scorelist)), samplenames))
+                    rownames(scorelist[[1]])), samplenames))
 
     #remove all zero rows
     hmat[is.na(hmat)] <- 0
